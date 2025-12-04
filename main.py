@@ -11,6 +11,8 @@ def main():
 
         if char == 'q':
             break
+        sys.stdout.write(f"Tecla: {repr(char)}      \r")
+
 
     restart_terminal()
 

@@ -11,7 +11,7 @@ def set_terminal():
     # set non canonical mode
     new_settings[3] &= ~termios.ICANON
     new_settings[3] &= ~termios.ECHO
-    new_settings[6][termios.VMIN] = 0
+    new_settings[6][termios.VMIN] = 1
     new_settings[6][termios.VTIME] = 0
 
     termios.tcsetattr(fd, termios.TCSADRAIN, new_settings)
