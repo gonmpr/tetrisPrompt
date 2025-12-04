@@ -1,9 +1,9 @@
-import sys, tty, termios
-from tools import set_terminal, read_char, restart_terminal
+import sys, tty, termios, time
+from tools import set_terminal, read_char, restart_terminal, draw
 
 def main():
 
-
+    i=0
     set_terminal()
 
     while True:
@@ -11,7 +11,14 @@ def main():
 
         if char == 'q':
             break
-        sys.stdout.write(f"Tecla: {repr(char)}      \r")
+
+        draw(5+i,10,'#')
+        draw(6+i,10,'#')
+
+        time.sleep(3)
+
+        i += 1
+        set_terminal()
 
 
     restart_terminal()

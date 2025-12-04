@@ -11,7 +11,7 @@ def set_terminal():
     # set non canonical mode
     new_settings[3] &= ~termios.ICANON
     new_settings[3] &= ~termios.ECHO
-    new_settings[6][termios.VMIN] = 1
+    new_settings[6][termios.VMIN] = 0
     new_settings[6][termios.VTIME] = 0
 
     termios.tcsetattr(fd, termios.TCSADRAIN, new_settings)
@@ -24,11 +24,19 @@ def set_terminal():
 
 def restart_terminal():
 
-    print("\033[?25h", end="", flush=True) #show cursor
-    print("\033[2J", end="", flush=True) #clear terminal
-    print("\033[m", end="", flush=True) #clear colors 
+    old_settings[3] |= termios.ECHO
     termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
+    sys.stdout.write("\033[?25h")  # show cursor
+    sys.stdout.write("\033[2J")    # clear screen
+    sys.stdout.write("\033[H")     # move to start
+    sys.stdout.write("\033[m")     # reset colors
+    sys.stdout.flush()
 
 def read_char():
     return sys.stdin.read(1)
+
+
+def draw(row, col, symbol):
+    sys.stdout.write(f"\033[{row};{col}H{symbol}")
+    sys.stdout.flush()
