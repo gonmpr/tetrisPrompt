@@ -1,25 +1,42 @@
 import sys, tty, termios, time
-from tools import set_terminal, read_char, restart_terminal, draw
+from tools import set_terminal, read_char, restart_terminal, draw, clear_terminal
 
 def main():
+    last_time = time.time()
+    frame_delay = 0.5
+
 
     i=0
     set_terminal()
 
     while True:
-        char = read_char()
+        current_time = time.time()
 
+
+        # read input
+        char = read_char()
         if char == 'q':
             break
 
-        draw(5+i,10,'#')
-        draw(6+i,10,'#')
 
-        time.sleep(3)
 
-        i += 1
-        set_terminal()
 
+        if current_time - last_time >= frame_delay: #logic/render 
+
+
+            clear_terminal()
+            draw(5+i,10,'#')
+            draw(6+i,10,'#')
+
+
+            last_time = current_time
+            i += 1
+
+
+
+
+
+        time.sleep(0.01)
 
     restart_terminal()
 

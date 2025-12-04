@@ -16,10 +16,14 @@ def set_terminal():
 
     termios.tcsetattr(fd, termios.TCSADRAIN, new_settings)
 
-
-
     print("\033[?25l", end="", flush=True) #hidecursor
-    print("\033[2J", end="", flush=True) #clear terminal
+
+
+
+
+
+def clear_terminal():
+    print("\033[2J\033[3J\033[H", end="", flush=True)
 
 
 def restart_terminal():
@@ -33,8 +37,16 @@ def restart_terminal():
     sys.stdout.write("\033[m")     # reset colors
     sys.stdout.flush()
 
+
+
+
+
 def read_char():
     return sys.stdin.read(1)
+
+
+
+
 
 
 def draw(row, col, symbol):
