@@ -1,44 +1,47 @@
 import sys, tty, termios, time
 from tools import set_terminal, read_char, restart_terminal, draw, clear_terminal
+from board import board_state, make_empty_board
 
 def main():
     last_time = time.time()
     frame_delay = 0.5
 
+    set_terminal() # set the terminal to game mode
+    make_empty_board() # creates an empty board
 
-    i=0
-    set_terminal()
+
+
+
+
+
+
+
 
     while True:
         current_time = time.time()
+        char = read_char() # read user input
 
-
-        # read input
-        char = read_char()
         if char == 'q':
             break
 
 
 
 
-        if current_time - last_time >= frame_delay: #logic/render 
-
-
+        if current_time - last_time >= frame_delay: #if the time passed, it will render 
             clear_terminal()
-            draw(5+i,10,'#')
-            draw(6+i,10,'#')
+
+
 
 
             last_time = current_time
-            i += 1
 
 
 
 
 
-        time.sleep(0.01)
+        time.sleep(0.01) #just because
 
-    restart_terminal()
+    restart_terminal() #puts the terminal in normal mode again
 
 if __name__ == "__main__":
     main()

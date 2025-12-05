@@ -1,9 +1,11 @@
 import sys, tty, termios
-
+from board import board_state
+from constants import SYMBOL, BOARD_HEIGHT, BOARD_WIDTH
 fd = sys.stdin.fileno()
 old_settings = termios.tcgetattr(fd)
 
 
+# puts the terminal in game mode
 def set_terminal():
 
     new_settings = old_settings.copy()
@@ -21,11 +23,12 @@ def set_terminal():
 
 
 
-
+# for clearing the last render
 def clear_terminal():
     print("\033[2J\033[3J\033[H", end="", flush=True)
 
 
+# restore the terminal
 def restart_terminal():
 
     old_settings[3] |= termios.ECHO
@@ -40,7 +43,7 @@ def restart_terminal():
 
 
 
-
+# read user input
 def read_char():
     return sys.stdin.read(1)
 
@@ -48,7 +51,12 @@ def read_char():
 
 
 
+# draw a symbol in the given position
+def draw(board_state):
+    for row in BOARD_HEIGHT:
+        for col in BOARD_WIDTH:
+            sys.stdout.write(f"\033[{row};{col}H{SYMBOL}")
+            sys.stdout.flush()
 
-def draw(row, col, symbol):
-    sys.stdout.write(f"\033[{row};{col}H{symbol}")
-    sys.stdout.flush()
+
+
