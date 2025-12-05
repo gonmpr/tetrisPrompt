@@ -10,3 +10,5 @@ def make_empty_board():
         board_state.append([])
         for col in range(BOARD_WIDTH):
             board_state[-1].append(' ')
+
+

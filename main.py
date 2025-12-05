@@ -1,6 +1,7 @@
 import sys, tty, termios, time
 from tools import set_terminal, read_char, restart_terminal, draw, clear_terminal
 from board import board_state, make_empty_board
+from constants import SYMBOL
 
 def main():
     last_time = time.time()
@@ -9,7 +10,8 @@ def main():
     set_terminal() # set the terminal to game mode
     make_empty_board() # creates an empty board
 
-
+    board_state [0][2] = SYMBOL
+    board_state [1][2] = SYMBOL
 
 
 
@@ -28,8 +30,7 @@ def main():
 
 
         if current_time - last_time >= frame_delay: #if the time passed, it will render 
-            clear_terminal()
-
+            draw()
 
 
 

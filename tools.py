@@ -52,11 +52,15 @@ def read_char():
 
 
 # draw a symbol in the given position
-def draw(board_state):
-    for row in BOARD_HEIGHT:
-        for col in BOARD_WIDTH:
-            sys.stdout.write(f"\033[{row};{col}H{SYMBOL}")
-            sys.stdout.flush()
+def draw():
+    clear_terminal()
+    for row in range(BOARD_HEIGHT):
+        for col in range(BOARD_WIDTH):
+
+            if board_state[row][col] != ' ':
+
+                sys.stdout.write(f"\033[{row+1};{col+1}H{SYMBOL}")
+                sys.stdout.flush()
 
 
 
