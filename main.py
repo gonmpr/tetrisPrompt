@@ -1,12 +1,24 @@
-import sys, tty, termios, time
+import sys, tty, termios, time, random
 from tools import set_terminal, read_char, restart_terminal, draw, clear_terminal
 from board import board_state, make_empty_board
 from constants import SYMBOL
-from piece import stick, Piece
+from piece import Piece, select_piece
+
+forms = [
+            [(1, 10),(2,10),(3,10)], # palo
+            [(1, 10),(2,10),(1,11),(2,11)], #cubo
+            [(1,9),(1, 10),(2,10),(3,10)], # ele
+            [(2,9),(2,10),(2,11),(1,10)] # interseccion?
+        ]
+
+
+
 
 def main():
     last_time = time.time()
     frame_delay = 0.5
+
+    piece = select_piece(forms)
 
     set_terminal() # set the terminal to game mode
     make_empty_board() # creates an empty board
@@ -20,18 +32,18 @@ def main():
 
         if char == 'q':
             break
+        if char in ['a', 'd'] and piece.can_move_down:
 
-        if char in ['a', 'd'] and stick.can_move:
-            stick.move_sideways(char)
-            stick.draw_piece()
+            piece.move_sideways(char)
+            piece.draw_piece()
             draw()
 
 
         if current_time - last_time >= frame_delay: #if the time passed, it will render 
-            if stick.move_down():
-                stick.draw_piece()
+            if piece.move_down():
+                piece.draw_piece()
             else:
-                pass
+                piece = select_piece(forms)
             draw()
 
 
