@@ -1,6 +1,7 @@
 import sys, tty, termios
 from board import board_state
 from constants import SYMBOL, BOARD_HEIGHT, BOARD_WIDTH
+
 fd = sys.stdin.fileno()
 old_settings = termios.tcgetattr(fd)
 
@@ -20,12 +21,21 @@ def set_terminal():
 
     print("\033[?25l", end="", flush=True) #hidecursor
 
+def draw_borders():
+    for i in range(BOARD_WIDTH):
+        sys.stdout.write(f"\033[{1};{i+1}H{'-'}")
+        sys.stdout.write(f"\033[{BOARD_HEIGHT};{i+1}H{'-'}")
+
+    for i in range(BOARD_HEIGHT):
+        sys.stdout.write(f"\033[{i+1};{1}H{'|'}")
+        sys.stdout.write(f"\033[{i+1};{BOARD_WIDTH + 1}H{'|'}")
 
 
 
 # for clearing the last render
 def clear_terminal():
     print("\033[2J\033[3J\033[H", end="", flush=True)
+    draw_borders()
 
 
 # restore the terminal
@@ -54,6 +64,8 @@ def read_char():
 # draw a symbol in the given position
 def draw():
     clear_terminal()
+
+
     for row in range(BOARD_HEIGHT):
         for col in range(BOARD_WIDTH):
 

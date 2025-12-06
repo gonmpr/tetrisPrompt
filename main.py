@@ -2,7 +2,7 @@ import sys, tty, termios, time
 from tools import set_terminal, read_char, restart_terminal, draw, clear_terminal
 from board import board_state, make_empty_board
 from constants import SYMBOL
-from piece import stick
+from piece import stick, Piece
 
 def main():
     last_time = time.time()
@@ -21,16 +21,17 @@ def main():
         if char == 'q':
             break
 
-        if char in ['a', 'd']:
+        if char in ['a', 'd'] and stick.can_move:
             stick.move_sideways(char)
             stick.draw_piece()
             draw()
 
 
         if current_time - last_time >= frame_delay: #if the time passed, it will render 
-            stick.move_sideways(char)
-            stick.move_down()
-            stick.draw_piece()
+            if stick.move_down():
+                stick.draw_piece()
+            else:
+                pass
             draw()
 
 
