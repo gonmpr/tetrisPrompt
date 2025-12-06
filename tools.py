@@ -30,7 +30,9 @@ def draw_borders():
         sys.stdout.write(f"\033[{i+1};{1}H{'|'}")
         sys.stdout.write(f"\033[{i+1};{BOARD_WIDTH + 1}H{'|'}")
 
-
+def draw_text(text, row, col):
+    for i in range(0, len(text)):
+        sys.stdout.write(f"\033[{row};{col+i}H{text[i]}")
 
 # for clearing the last render
 def clear_terminal():
@@ -62,7 +64,7 @@ def read_char():
 
 
 # draw a symbol in the given position
-def draw():
+def draw(score):
     clear_terminal()
 
 
@@ -72,7 +74,8 @@ def draw():
             if board_state[row][col] != ' ':
 
                 sys.stdout.write(f"\033[{row+1};{col+1}H{SYMBOL}")
-                sys.stdout.flush()
 
 
-
+    draw_text('Q: EXIT', BOARD_HEIGHT + 2, 1)
+    draw_text(f'SCORE: {score}', BOARD_HEIGHT + 3, 1)
+    sys.stdout.flush()

@@ -70,7 +70,47 @@ class Piece:
                 board_state[row][col] = SYMBOL
             return False
 
+    def rotate(self):
 
+        avg_row = sum(pos[0] for pos in self.previous_position) / len(self.previous_position)
+        avg_col = sum(pos[1] for pos in self.previous_position) / len(self.previous_position)
+
+        new_positions = []
+        for row, col in self.previous_position:
+
+            rel_row = row - avg_row
+            rel_col = col - avg_col
+
+
+            new_rel_row = rel_col
+            new_rel_col = -rel_row
+
+
+            new_row = int(avg_row + new_rel_row)
+            new_col = int(avg_col + new_rel_col)
+
+            new_positions.append((new_row, new_col))
+
+
+        can_rotate = True
+        for row, col in new_positions:
+
+            if row < 0 or row >= BOARD_HEIGHT or col < 1 or col >= BOARD_WIDTH:
+                can_rotate = False
+                break
+
+
+            if (board_state[row][col] != ' ' and
+                (row, col) not in self.previous_position):
+                can_rotate = False
+                break
+
+
+        if can_rotate:
+            self.next_position = new_positions
+            return True
+
+        return False
 
 
     def draw_piece(self):
