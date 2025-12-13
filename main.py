@@ -4,11 +4,12 @@ from board import board_state, make_empty_board, check_and_clear_lines, check_ga
 from constants import SYMBOL
 from piece import Piece, select_piece
 
-forms = [
+forms = [                                     #  (row, column)
             [(1, 10),(2,10),(3,10)],
             [(1, 10),(2,10),(1,11),(2,11)],
             [(1,9),(1, 10),(2,10),(3,10)],
-            [(2,9),(2,10),(2,11),(1,10)]
+            [(2,9),(2,10),(2,11),(1,10)],
+            [(1,10),(2,10),(2,11),(3,11)]
         ]
 
 
@@ -36,7 +37,7 @@ def main():
         if char == 's':
             current_delay = 0
         else:
-            current_delay = normal_delay
+            current_delay = normal_delay - score*0.08
 
         if char == 'w':
             if piece.rotate():
